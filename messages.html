@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JariShare — Messages</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M8 14.5 16 8l8 6.5M10.5 13.5V24h11V13.5' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="page-messages">
+
+  <main class="page-shell">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">Messages</h1>
+        <p class="page-subtitle">Rental conversations with renters, plus automatic alerts about your listings.</p>
+      </div>
+    </header>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tab-messages" data-panel="messages" type="button">Conversations</button>
+      <button class="tab" id="tab-notifications" data-panel="notifications" type="button">Notifications</button>
+    </div>
+
+    <div class="card" style="padding: 8px 20px;">
+
+      <!-- Conversations -->
+      <section id="panel-messages">
+        <div id="messages-list"></div>
+      </section>
+
+      <!-- Notifications -->
+      <section id="panel-notifications" hidden>
+        <div id="notifications-list"></div>
+      </section>
+
+    </div>
+
+    <p class="panels-note">Requests you receive will start a conversation here automatically.</p>
+  </main>
+
+  <script>
+    const ICON_MSG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>';
+    const ICON_BELL = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
+
+    function initials(name) {
+      const parts = String(name || "?").trim().split(/\s+/);
+      return ((parts[0] || "?").charAt(0) + (parts[1] ? parts[1].charAt(0) : "")).toUpperCase();
+    }
+
+    function emptyState(title, text) {
+      return (
+        '<div class="empty-state" style="border:0;background:none">' +
+          '<div class="empty-icon">' + ICON_MSG + "</div>" +
+          '<p class="empty-title">' + title + "</p>" +
+          '<p class="empty-text">' + text + "</p>" +
+        "</div>"
+      );
+    }
+
+    function renderConversations() {
+      const el = document.getElementById("messages-list");
+      const messages = JSON.parse(localStorage.getItem("jariMessages")) || [];
+
+      if (messages.length === 0) {
+        el.innerHTML = emptyState(
+          "No conversations yet",
+          "When someone requests one of your items, their messages will show up here."
+        );
+        return;
+      }
+
+      el.innerHTML = messages.map(function (m) {
+        return (
+          '<div class="msg-row">' +
+            '<span class="msg-avatar">' + initials(m.senderName) + "</span>" +
+            '<div class="msg-body">' +
+              '<p class="msg-name">' + m.senderName + "</p>" +
+              '<p class="msg-text">' + m.text + "</p>" +
+            "</div>" +
+          "</div>"
+        );
+      }).join("");
+    }
+
+    function renderNotifications() {
+      const el = document.getElementById("notifications-list");
+      const notifs = JSON.parse(localStorage.getItem("jariNotifications")) || [];
+
+      // Strip pictographs from legacy notifications (older builds wrote emoji)
+      function cleanText(t) {
+        return String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2B00}-\u{2BFF}]/gu, "").trim();
+      }
+
+      if (notifs.length === 0) {
+        el.innerHTML =
+          '<div class="empty-state" style="border:0;background:none">' +
+            '<div class="empty-icon">' + ICON_BELL + "</div>" +
+            '<p class="empty-title">No notifications yet</p>' +
+            '<p class="empty-text">Listing a new item or changing a status will create an alert automatically.</p>' +
+          "</div>";
+        return;
+      }
+
+      el.innerHTML = notifs.map(function (n) {
+        return (
+          '<div class="msg-row">' +
+            '<span class="msg-avatar accent">' + ICON_BELL + "</span>" +
+            '<div class="msg-body">' +
+              '<p class="msg-name">' + cleanText(n.text) + "</p>" +
+              '<p class="msg-time">' + n.time + "</p>" +
+            "</div>" +
+          "</div>"
+        );
+      }).join("");
+    }
+
+    /* Tabs */
+    document.querySelectorAll(".tabs .tab").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        document.querySelectorAll(".tabs .tab").forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+
+        const isMessages = btn.dataset.panel === "messages";
+        document.getElementById("panel-messages").hidden = !isMessages;
+        document.getElementById("panel-notifications").hidden = isMessages;
+      });
+    });
+
+    renderConversations();
+    renderNotifications();
+  </script>
+
+  <script src="components.js"></script>
+</body>
+</html>

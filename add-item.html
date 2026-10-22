@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JariShare — Post an Item</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M8 14.5 16 8l8 6.5M10.5 13.5V24h11V13.5' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="page-add-item">
+
+  <main class="page-shell">
+    <a class="back-link" href="my-items.html">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      My Items
+    </a>
+
+    <header class="page-header">
+      <div>
+        <h1 class="page-title" id="form-title">Post a new item</h1>
+        <p class="page-subtitle" id="form-subtitle">Add a clear photo and the essentials — neighbors decide faster when they can see the item.</p>
+      </div>
+    </header>
+
+    <form id="add-item-form" class="form-card" novalidate>
+
+      <!-- Photo -->
+      <div class="field">
+        <label class="label">Photo</label>
+        <label class="upload-box" id="upload-box" for="item-image-input">
+          <input type="file" id="item-image-input" accept="image/*" hidden>
+          <span class="upload-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 15-4.5-4.5L6.5 21.5"/><rect x="2" y="2" width="20" height="20" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+          </span>
+          <span class="upload-title">Upload a photo</span>
+          <span class="upload-hint">PNG or JPG — click to browse, or drag an image here</span>
+        </label>
+        <div class="preview-row" id="preview-row" hidden>
+          <img id="image-preview" class="image-preview" alt="Selected photo preview">
+          <div>
+            <p class="preview-name">Photo selected</p>
+            <p class="preview-meta">Click the box above to replace it</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Basics -->
+      <div class="field">
+        <label class="label" for="item-name">Item name <span class="req">*</span></label>
+        <input type="text" id="item-name" class="input" placeholder="e.g. Cordless Drill, DSLR Camera…" required>
+      </div>
+
+      <div class="input-grid">
+        <div class="field">
+          <label class="label" for="item-category">Category</label>
+          <select id="item-category" class="select">
+            <option value="">Select…</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Tools">Tools</option>
+            <option value="Home & Kitchen">Home &amp; Kitchen</option>
+            <option value="Outdoor">Outdoor</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="sharing-type">Sharing type</label>
+          <select id="sharing-type" class="select">
+            <option value="Rent">Rent</option>
+            <option value="Borrow">Free borrow</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="item-price">Price per day <span class="req">*</span></label>
+        <div style="position:relative">
+          <input type="number" id="item-price" class="input" min="0" step="1" placeholder="0" required style="padding-right:64px">
+          <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text-400);font-weight:600">EGP</span>
+        </div>
+        <p class="hint" id="price-hint">Set 0 if you're offering it for free.</p>
+      </div>
+
+      <!-- Details -->
+      <div class="field">
+        <label class="label" for="item-description">Description</label>
+        <textarea id="item-description" class="textarea" rows="4" placeholder="Condition, accessories included, pickup spot, any usage rules…"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg btn-block" id="save-item-btn">Publish Item</button>
+    </form>
+  </main>
+
+  <script>
+    let imageBase64 = "";
+    let editIndex = null;
+    const EDIT_FALLBACK = "images/tools.jpg.jpeg";
+
+    const fileInput   = document.getElementById("item-image-input");
+    const uploadBox   = document.getElementById("upload-box");
+    const previewRow  = document.getElementById("preview-row");
+    const imagePreview= document.getElementById("image-preview");
+    const priceField  = document.getElementById("item-price");
+    const sharingSel  = document.getElementById("sharing-type");
+    const priceHint   = document.getElementById("price-hint");
+
+    function logNotification(text) {
+      const notifs = JSON.parse(localStorage.getItem("jariNotifications")) || [];
+      notifs.unshift({ text: text, time: new Date().toLocaleString() });
+      localStorage.setItem("jariNotifications", JSON.stringify(notifs.slice(0, 50)));
+    }
+
+    function showPreview(dataUrl) {
+      imagePreview.src = dataUrl;
+      previewRow.hidden = false;
+    }
+
+    function readFileAsDataURL(file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imageBase64 = e.target.result;
+        showPreview(imageBase64);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* Pick a photo */
+    fileInput.addEventListener("change", function () {
+      const file = fileInput.files[0];
+      if (file && file.type.startsWith("image/")) readFileAsDataURL(file);
+    });
+
+    /* Drag & drop */
+    ["dragover", "dragenter"].forEach(function (ev) {
+      uploadBox.addEventListener(ev, function (e) {
+        e.preventDefault();
+        uploadBox.classList.add("dragging");
+      });
+    });
+    ["dragleave", "dragend"].forEach(function (ev) {
+      uploadBox.addEventListener(ev, function () { uploadBox.classList.remove("dragging"); });
+    });
+    uploadBox.addEventListener("drop", function (e) {
+      e.preventDefault();
+      uploadBox.classList.remove("dragging");
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith("image/")) {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        fileInput.files = dt.files;
+        fileInput.dispatchEvent(new Event("change"));
+      }
+    });
+
+    /* Free-borrow hint syncs with price */
+    function syncPriceHint() {
+      if (Number(priceField.value) === 0) {
+        priceHint.textContent = "Listed for free — neighbors can borrow it at no cost.";
+      } else {
+        priceHint.textContent = "Set 0 if you're offering it for free.";
+      }
+    }
+    priceField.addEventListener("input", syncPriceHint);
+
+    /* Edit mode (?index=n) — prefill the form */
+    (function loadForEdit() {
+      const indexParam = new URLSearchParams(window.location.search).get("index");
+      if (indexParam === null) return;
+
+      const items = JSON.parse(localStorage.getItem("jariItems")) || [];
+      const item  = items[Number(indexParam)];
+
+      if (!item) return;
+      editIndex = Number(indexParam);
+
+      document.getElementById("form-title").textContent = "Edit item";
+      document.getElementById("form-subtitle").textContent = "Update anything you like — the item keeps its current status.";
+      document.getElementById("save-item-btn").textContent = "Save Changes";
+
+      document.getElementById("item-name").value         = item.name;
+      document.getElementById("item-category").value     = item.category || "";
+      sharingSel.value                                   = item.sharingType === "Borrow" ? "Borrow" : "Rent";
+      priceField.value                                   = item.price;
+      document.getElementById("item-description").value  = item.description || "";
+
+      if (item.image && item.image.startsWith("data:image")) {
+        imageBase64 = item.image;
+        showPreview(item.image);
+      }
+      syncPriceHint();
+    })();
+
+    /* Save */
+    document.getElementById("add-item-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("item-name").value.trim();
+      const price = priceField.value;
+
+      if (name.length < 2) return Jari.toast("Please give the item a name.", "error");
+      if (price === "") return Jari.toast("Please set a price per day (0 for free).", "error");
+
+      const items = JSON.parse(localStorage.getItem("jariItems")) || [];
+
+      if (editIndex !== null && items[editIndex]) {
+        items[editIndex] = Object.assign({}, items[editIndex], {
+          name: name,
+          price: price,
+          category: document.getElementById("item-category").value,
+          sharingType: sharingSel.value,
+          description: document.getElementById("item-description").value,
+          image: imageBase64 || items[editIndex].image || EDIT_FALLBACK
+        });
+        logNotification('Your listing "' + name + '" was updated.');
+        Jari.flash("Changes saved.");
+      } else {
+        items.push({
+          name: name,
+          price: price,
+          category: document.getElementById("item-category").value,
+          sharingType: sharingSel.value,
+          description: document.getElementById("item-description").value,
+          image: imageBase64 || EDIT_FALLBACK,
+          status: "active"
+        });
+        logNotification('New listing "' + name + '" is now visible to neighbors.');
+        Jari.flash("Your item is published and visible to neighbors.");
+      }
+
+      localStorage.setItem("jariItems", JSON.stringify(items));
+      window.location.href = "my-items.html";
+    });
+  </script>
+
+  <script src="components.js"></script>
+</body>
+</html>

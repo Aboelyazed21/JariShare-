@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JariShare — My Items</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M8 14.5 16 8l8 6.5M10.5 13.5V24h11V13.5' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="page-my-items">
+
+  <main class="page-shell">
+    <a class="back-link" href="dashboard.html">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Dashboard
+    </a>
+
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">My Items</h1>
+        <p class="page-subtitle">Everything you've listed for your neighbors — switch status, edit details or remove a listing at any time.</p>
+      </div>
+      <a class="btn btn-primary" href="add-item.html">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        Post an Item
+      </a>
+    </header>
+
+    <!-- Status filters -->
+    <div class="tabs" id="status-tabs" role="tablist">
+      <button class="tab active" data-filter="all"><span class="dot dot-all"></span>All</button>
+      <button class="tab" data-filter="active"><span class="dot dot-active"></span>Active</button>
+      <button class="tab" data-filter="pending"><span class="dot dot-pending"></span>Pending</button>
+      <button class="tab" data-filter="unavailable"><span class="dot dot-unavailable"></span>Unavailable</button>
+    </div>
+
+    <!-- Listings (rendered from localStorage) -->
+    <div class="items-list" id="items-list"></div>
+  </main>
+
+  <script>
+    let items       = JSON.parse(localStorage.getItem("jariItems")) || [];
+    let activeFilter = "all";
+    const listEl = document.getElementById("items-list");
+
+    const ICON_EDIT = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>';
+    const ICON_TRASH = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6"/></svg>';
+
+    function logNotification(text) {
+      const notifs = JSON.parse(localStorage.getItem("jariNotifications")) || [];
+      notifs.unshift({ text: text, time: new Date().toLocaleString() });
+      localStorage.setItem("jariNotifications", JSON.stringify(notifs.slice(0, 50)));
+    }
+
+    function render() {
+      const visible = items
+        .map((item, index) => ({ item: item, index: index }))
+        .filter(function (v) { return activeFilter === "all" || (v.item.status || "active") === activeFilter; });
+
+      if (visible.length === 0) {
+        const label = activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1);
+        listEl.innerHTML =
+          '<div class="empty-state">' +
+            '<div class="empty-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></div>' +
+            '<p class="empty-title">' + (activeFilter === "all" ? "No items listed yet" : "Nothing with a “" + label + "” status") + '</p>' +
+            '<p class="empty-text">' + (activeFilter === "all" ? "Post your first item and it will appear here for neighbors to request." : "Try another filter, or post a new item.") + '</p>' +
+            '<div class="empty-action"><a class="btn btn-primary btn-sm" href="add-item.html">Post an Item</a></div>' +
+          "</div>";
+        return;
+      }
+
+      listEl.innerHTML = visible.map(function (v) {
+        const status = v.item.status || "active";
+        const label  = status.charAt(0).toUpperCase() + status.slice(1);
+        return (
+          '<article class="item-card" data-index="' + v.index + '">' +
+            '<img class="item-thumb" src="' + (v.item.image || "images/tools.jpg.jpeg") + '" alt="' + v.item.name + '">' +
+            '<div class="item-info">' +
+              '<h3 class="item-name">' + v.item.name + "</h3>" +
+              '<p class="item-price">' + v.item.price + ' EGP <span style="color:var(--text-500);font-weight:500">/ day</span></p>' +
+              '<p class="item-cat">' + (v.item.category || "Other") + (v.item.sharingType === "Borrow" ? " · Free borrow" : "") + "</p>" +
+            "</div>" +
+            '<div class="item-actions">' +
+              '<select class="status-select st-' + status + '" aria-label="Item status">' +
+                '<option value="active"'      + (status === "active" ? " selected" : "")      + ">Active</option>" +
+                '<option value="pending"'     + (status === "pending" ? " selected" : "")     + ">Pending</option>" +
+                '<option value="unavailable"' + (status === "unavailable" ? " selected" : "") + ">Unavailable</option>" +
+              "</select>" +
+              '<button class="icon-btn" data-act="edit" title="Edit item" aria-label="Edit item">' + ICON_EDIT + "</button>" +
+              '<button class="icon-btn danger" data-act="delete" title="Delete item" aria-label="Delete item">' + ICON_TRASH + "</button>" +
+            "</div>" +
+          "</article>"
+        );
+      }).join("");
+    }
+
+    /* Event delegation — one listener for the whole list */
+    listEl.addEventListener("click", async function (e) {
+      const card = e.target.closest(".item-card");
+      if (!card) return;
+      const index = Number(card.dataset.index);
+
+      if (e.target.closest('[data-act="edit"]')) {
+        window.location.href = "add-item.html?index=" + index;
+        return;
+      }
+
+      if (e.target.closest('[data-act="delete"]')) {
+        const name = items[index].name;
+        const ok = await Jari.confirm("Delete “" + name + "”?", "This listing will be removed permanently. Neighbors can no longer request it.", "Delete");
+        if (!ok) return;
+        items.splice(index, 1);
+        localStorage.setItem("jariItems", JSON.stringify(items));
+        logNotification('Your listing "' + name + '" was deleted.');
+        Jari.toast("Item deleted.", "info");
+        render();
+      }
+    });
+
+    listEl.addEventListener("change", function (e) {
+      const select = e.target.closest(".status-select");
+      if (!select) return;
+      const card = select.closest(".item-card");
+      const index = Number(card.dataset.index);
+      const newStatus = select.value;
+
+      items[index].status = newStatus;
+      localStorage.setItem("jariItems", JSON.stringify(items));
+      logNotification('Status of "' + items[index].name + '" changed to ' + newStatus + ".");
+
+      select.classList.remove("st-active", "st-pending", "st-unavailable");
+      select.classList.add("st-" + newStatus);
+      Jari.toast("Status updated to " + newStatus + ".");
+    });
+
+    document.getElementById("status-tabs").addEventListener("click", function (e) {
+      const tab = e.target.closest(".tab");
+      if (!tab) return;
+      document.querySelectorAll("#status-tabs .tab").forEach(function (t) { t.classList.remove("active"); });
+      tab.classList.add("active");
+      activeFilter = tab.dataset.filter;
+      render();
+    });
+
+    render();
+  </script>
+
+  <script src="components.js"></script>
+</body>
+</html>
