@@ -4,11 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JariShare — Create Account</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M8 14.5 16 8l8 6.5M10.5 13.5V24h11V13.5' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M6 16 16 8l10 8M10 15v9h12v-9' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script>
+    /* Apply saved theme before first paint */
+    (function () {
+      try {
+        var t = localStorage.getItem("jariTheme");
+        if (t !== "dark" && t !== "light") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="lang.js"></script>
 </head>
 <body class="auth-page" id="page-register">
 
@@ -18,78 +29,82 @@
     <aside class="auth-banner">
       <div class="auth-brand">
         <span class="brand-mark">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path class="logo-house-l" d="M2.5 11.2 6.5 7.8l4 3.4V19h-8z"/>
+            <path class="logo-house-r" d="M21.5 11.2 17.5 7.8l-4 3.4V19h8z"/>
+            <g class="logo-item"><rect x="10.6" y="9.6" width="2.8" height="2.8" rx="0.7" fill="currentColor" stroke="none"/></g>
+          </svg>
         </span>
         JariShare
       </div>
 
       <div class="auth-banner-main">
-        <h2 class="auth-banner-title">Everything you need, already next door.</h2>
-        <p class="auth-banner-text">Rent tools, gear and household items from neighbors you trust — or earn by sharing the things you barely use.</p>
+        <h2 class="auth-banner-title" data-i18n="reg.bannerTitle">Everything you need, already next door.</h2>
+        <p class="auth-banner-text" data-i18n="reg.bannerText">Rent tools, gear and household items from neighbors you trust — or earn by sharing the things you barely use.</p>
         <ul class="auth-points">
           <li>
             <span class="point-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            Lend and borrow within your own neighborhood
+            <span data-i18n="reg.point1">Lend and borrow within your own neighborhood</span>
           </li>
           <li>
             <span class="point-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            Fair daily pricing, agreed upfront
+            <span data-i18n="reg.point2">Fair daily pricing, agreed upfront</span>
           </li>
           <li>
             <span class="point-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            Track every item, request and update in one place
+            <span data-i18n="reg.point3">Track every item, request and update in one place</span>
           </li>
         </ul>
       </div>
 
-      <p class="auth-banner-foot">Already shared 1,200+ items between neighbors this year.</p>
+      <p class="auth-banner-foot" data-i18n="reg.foot">Already shared 1,200+ items between neighbors this year.</p>
     </aside>
 
     <!-- Form side -->
     <section class="auth-form-side">
-      <h1 class="auth-title">Create your account</h1>
-      <p class="auth-subtitle">Join your neighborhood on JariShare. It takes less than a minute.</p>
+      <h1 class="auth-title" data-i18n="reg.title">Create your account</h1>
+      <p class="auth-subtitle" data-i18n="reg.subtitle">Join your neighborhood on JariShare. It takes less than a minute.</p>
 
       <form id="register-form" novalidate>
         <div class="field">
-          <label class="label" for="reg-name">Full name</label>
-          <input type="text" id="reg-name" class="input" placeholder="e.g. Ahmed Ali" autocomplete="name" required>
+          <label class="label" for="reg-name" data-i18n="reg.name">Full name</label>
+          <input type="text" id="reg-name" class="input" data-i18n-ph="reg.namePh" placeholder="e.g. Ahmed Ali" autocomplete="name" required>
         </div>
 
         <div class="field">
-          <label class="label" for="reg-email">Email address</label>
-          <input type="email" id="reg-email" class="input" placeholder="you@example.com" autocomplete="email" required>
+          <label class="label" for="reg-email" data-i18n="reg.email">Email address</label>
+          <input type="email" id="reg-email" class="input" data-i18n-ph="reg.emailPh" placeholder="you@example.com" autocomplete="email" required>
         </div>
 
         <div class="field">
-          <label class="label" for="reg-phone">Phone number</label>
-          <input type="tel" id="reg-phone" class="input" placeholder="01xxxxxxxxx" autocomplete="tel" required>
+          <label class="label" for="reg-phone" data-i18n="reg.phone">Phone number</label>
+          <input type="tel" id="reg-phone" class="input" data-i18n-ph="reg.phonePh" placeholder="01xxxxxxxxx" autocomplete="tel" required>
         </div>
 
         <div class="input-grid">
           <div class="field">
-            <label class="label" for="reg-city">City</label>
-            <input type="text" id="reg-city" class="input" placeholder="Cairo" required>
+            <label class="label" for="reg-city" data-i18n="reg.city">City</label>
+            <input type="text" id="reg-city" class="input" data-i18n-ph="reg.cityPh" placeholder="Cairo" required>
           </div>
           <div class="field">
-            <label class="label" for="reg-district">District</label>
-            <input type="text" id="reg-district" class="input" placeholder="Nasr City" required>
+            <label class="label" for="reg-district" data-i18n="reg.district">District</label>
+            <input type="text" id="reg-district" class="input" data-i18n-ph="reg.districtPh" placeholder="Nasr City" required>
           </div>
         </div>
 
         <div class="field">
-          <label class="label" for="reg-pass">Password</label>
-          <input type="password" id="reg-pass" class="input" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required>
+          <label class="label" for="reg-pass" data-i18n="reg.pass">Password</label>
+          <input type="password" id="reg-pass" class="input" data-i18n-ph="reg.passPh" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required>
         </div>
 
         <div class="field">
-          <label class="label" for="reg-confirm-pass">Confirm password</label>
-          <input type="password" id="reg-confirm-pass" class="input" placeholder="Re-enter your password" autocomplete="new-password" required>
+          <label class="label" for="reg-confirm-pass" data-i18n="reg.confirm">Confirm password</label>
+          <input type="password" id="reg-confirm-pass" class="input" data-i18n-ph="reg.confirmPh" placeholder="Re-enter your password" autocomplete="new-password" required>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Create Account</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" data-i18n="reg.btn">Create Account</button>
 
-        <p class="auth-alt">Already have an account? <a href="login.html">Log in</a></p>
+        <p class="auth-alt"><span data-i18n="reg.alt">Already have an account?</span> <a href="login.html" data-i18n="reg.altLink">Log in</a></p>
       </form>
     </section>
 
@@ -99,29 +114,29 @@
     document.getElementById("register-form").addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const fullName    = document.getElementById("reg-name").value.trim();
-      const email       = document.getElementById("reg-email").value.trim().toLowerCase();
-      const phone       = document.getElementById("reg-phone").value.trim();
-      const city        = document.getElementById("reg-city").value.trim();
-      const district    = document.getElementById("reg-district").value.trim();
-      const password    = document.getElementById("reg-pass").value;
-      const confirmPass = document.getElementById("reg-confirm-pass").value;
+      var fullName    = document.getElementById("reg-name").value.trim();
+      var email       = document.getElementById("reg-email").value.trim().toLowerCase();
+      var phone       = document.getElementById("reg-phone").value.trim();
+      var city        = document.getElementById("reg-city").value.trim();
+      var district    = document.getElementById("reg-district").value.trim();
+      var password    = document.getElementById("reg-pass").value;
+      var confirmPass = document.getElementById("reg-confirm-pass").value;
 
-      if (fullName.length < 2) return Jari.toast("Please enter your full name.", "error");
-      if (password.length < 6) return Jari.toast("Password needs at least 6 characters.", "error");
-      if (password !== confirmPass) return Jari.toast("The two passwords don't match. Please check and try again.", "error");
+      if (fullName.length < 2) return Jari.toast(Jari.t("toast.nameShort"), "error");
+      if (password.length < 6) return Jari.toast(Jari.t("toast.passShort"), "error");
+      if (password !== confirmPass) return Jari.toast(Jari.t("toast.mismatch"), "error");
 
-      const users = JSON.parse(localStorage.getItem("jariUsers")) || [];
+      var users = JSON.parse(localStorage.getItem("jariUsers")) || [];
 
-      if (users.some(u => u.email === email)) {
-        return Jari.toast("This email is already registered — try logging in instead.", "error");
+      if (users.some(function (u) { return u.email === email; })) {
+        return Jari.toast(Jari.t("toast.emailTaken"), "error");
       }
 
       users.push({ name: fullName, email: email, phone: phone, city: city, district: district, password: password });
       localStorage.setItem("jariUsers", JSON.stringify(users));
       localStorage.setItem("jariCurrentUser", email);
 
-      Jari.flash("Your account is ready — welcome to JariShare.");
+      Jari.flash(Jari.t("flash.accountReady"));
       window.location.href = "dashboard.html";
     });
   </script>

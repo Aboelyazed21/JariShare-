@@ -46,6 +46,83 @@
   --r-pill: 999px;
 
   --focus-ring: 0 0 0 3px rgba(91, 78, 230, 0.18);
+
+  color-scheme: light;
+
+  /* Theme-aware component tokens (overridden in dark mode) */
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --input-bg: #FBFBFD;
+  --upload-bg: #F8F7FF;
+  --upload-bg-hover: #F0EDFF;
+  --upload-border: #C9C2F4;
+  --empty-bg: rgba(255, 255, 255, 0.6);
+  --danger-text: #DC2626;
+  --danger-soft-hover: #FAD9D9;
+
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A8194' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  --st-active-bg: #E7F6EC;      --st-active-fg: #15803D;
+  --st-pending-bg: #FEF3E2;     --st-pending-fg: #B45309;
+  --st-unavailable-bg: #EEF0F4; --st-unavailable-fg: #5B6472;
+  --st-active-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2315803D' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --st-pending-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23B45309' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --st-unavailable-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%235B6472' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================
+   Dark mode
+   ========================================================== */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --primary: #7C6FF5;
+  --primary-hover: #8F84F8;
+  --primary-soft: rgba(124, 111, 245, 0.16);
+  --primary-border: rgba(124, 111, 245, 0.4);
+
+  --bg: #101218;
+  --surface: #191C26;
+  --surface-2: #22252F;
+  --text-900: #F2F3F7;
+  --text-800: #E5E7EF;
+  --text-700: #C6CBDA;
+  --text-600: #A6ADBE;
+  --text-500: #8A91A2;
+  --text-400: #6E7486;
+  --border: #262A37;
+  --border-strong: #353A48;
+
+  --success: #4ADE80;
+  --success-soft: rgba(34, 197, 94, 0.15);
+  --warning: #FBBF24;
+  --warning-soft: rgba(245, 158, 11, 0.15);
+  --danger: #DC2626;
+  --danger-soft: rgba(220, 38, 38, 0.17);
+  --danger-border: rgba(248, 113, 113, 0.4);
+  --danger-text: #F87171;
+  --danger-soft-hover: rgba(220, 38, 38, 0.28);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.55);
+  --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.65);
+  --focus-ring: 0 0 0 3px rgba(124, 111, 245, 0.35);
+
+  --nav-bg: rgba(17, 19, 26, 0.88);
+  --input-bg: #14161F;
+  --upload-bg: rgba(124, 111, 245, 0.07);
+  --upload-bg-hover: rgba(124, 111, 245, 0.14);
+  --upload-border: rgba(124, 111, 245, 0.5);
+  --empty-bg: rgba(255, 255, 255, 0.02);
+
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A91A2' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  --st-active-bg: rgba(34, 197, 94, 0.16);      --st-active-fg: #4ADE80;
+  --st-pending-bg: rgba(245, 158, 11, 0.16);    --st-pending-fg: #FBBF24;
+  --st-unavailable-bg: rgba(148, 156, 172, 0.16); --st-unavailable-fg: #98A0B3;
+  --st-active-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%234ADE80' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --st-pending-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23FBBF24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --st-unavailable-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2398A0B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 }
 
 * {
@@ -66,6 +143,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: background-color .25s ease, color .25s ease;
 }
 
 img { display: block; max-width: 100%; }
@@ -142,13 +220,13 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
 .input, .select, .textarea {
   width: 100%; padding: 11px 13px;
   border: 1px solid var(--border-strong); border-radius: 10px;
-  background: #FBFBFD; color: var(--text-900);
+  background: var(--input-bg); color: var(--text-900);
   font-size: 14px; font-family: inherit; outline: none;
   transition: border-color .18s, box-shadow .18s, background .18s;
 }
 .textarea { resize: vertical; min-height: 92px; }
 .input:focus, .select:focus, .textarea:focus {
-  background: #fff; border-color: var(--primary); box-shadow: var(--focus-ring);
+  background: var(--surface); border-color: var(--primary); box-shadow: var(--focus-ring);
 }
 .input::placeholder, .textarea::placeholder { color: var(--text-400); }
 
@@ -178,9 +256,10 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
    ========================================================== */
 .navbar {
   position: sticky; top: 0; z-index: 900;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--nav-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
+  transition: background-color .25s ease, border-color .25s ease;
 }
 .navbar-inner {
   max-width: 1120px; margin: 0 auto; padding: 0 24px;
@@ -712,3 +791,144 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
   .navbar .nav-link { padding: 7px 9px; font-size: 12.5px; }
   .btn-nav-add { padding: 8px 12px; font-size: 12.5px; }
 }
+
+/* ==========================================================
+   Theme & language wiring (applies over the base rules)
+   ========================================================== */
+.btn-danger { color: var(--danger-text); }
+.btn-danger:hover { background: var(--danger-soft-hover); }
+.icon-btn.danger:hover { color: var(--danger-text); }
+.nav-logout:hover, .side-logout:hover { color: var(--danger-text); }
+
+.select { background-image: var(--select-arrow); }
+.upload-box { border-color: var(--upload-border); background: var(--upload-bg); }
+.upload-box:hover, .upload-box.dragging { background: var(--upload-bg-hover); border-color: var(--primary); }
+.empty-state { background: var(--empty-bg); }
+
+.st-active { background-color: var(--st-active-bg); color: var(--st-active-fg); background-image: var(--st-active-arrow); }
+.st-pending { background-color: var(--st-pending-bg); color: var(--st-pending-fg); background-image: var(--st-pending-arrow); }
+.st-unavailable { background-color: var(--st-unavailable-bg); color: var(--st-unavailable-fg); background-image: var(--st-unavailable-arrow); }
+
+/* ==========================================================
+   Animated brand mark — an item traveling between two homes
+   ========================================================== */
+.logo-item { animation: logo-swap 2.9s ease-in-out infinite; }
+.logo-house-l { animation: logo-dim-l 2.9s ease-in-out infinite; }
+.logo-house-r { animation: logo-dim-r 2.9s ease-in-out infinite; }
+@keyframes logo-swap {
+  0%, 14%   { transform: translateX(0); }
+  43%, 57%  { transform: translateX(6.5px); }
+  86%, 100% { transform: translateX(0); }
+}
+@keyframes logo-dim-l { 0%, 14% { opacity: 1; } 43%, 57% { opacity: .4; } 86%, 100% { opacity: 1; } }
+@keyframes logo-dim-r { 0%, 14% { opacity: .4; } 43%, 57% { opacity: 1; } 86%, 100% { opacity: .4; } }
+@media (prefers-reduced-motion: reduce) {
+  .logo-item, .logo-house-l, .logo-house-r { animation: none; }
+}
+
+/* ==========================================================
+   Navbar tools — theme & language switches
+   ========================================================== */
+.nav-tools { display: flex; align-items: center; gap: 8px; }
+.theme-toggle, .lang-toggle {
+  height: 36px; min-width: 36px;
+  border: 1px solid var(--border-strong); border-radius: 10px;
+  background: transparent; color: var(--text-600);
+  display: grid; place-items: center;
+  cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 700;
+  transition: color .18s, border-color .18s, background .18s, box-shadow .18s;
+}
+.theme-toggle { width: 36px; padding: 0; }
+.lang-toggle { padding: 0 12px; }
+.theme-toggle:hover, .lang-toggle:hover {
+  color: var(--primary); border-color: var(--primary-border); background: var(--primary-soft);
+}
+.theme-toggle:focus-visible, .lang-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* ==========================================================
+   Responsive navigation — hamburger panel
+   ========================================================== */
+.nav-burger {
+  display: none;
+  width: 38px; height: 38px; flex: none;
+  border: 1px solid var(--border-strong); border-radius: 10px;
+  background: var(--surface); color: var(--text-600);
+  cursor: pointer; place-items: center;
+  transition: color .18s, border-color .18s, background .18s;
+}
+.nav-burger:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-soft); }
+.nav-burger:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+@media (max-width: 1020px) {
+  .navbar-inner { position: relative; }
+  .nav-burger { display: grid; }
+  .nav-links {
+    display: none;
+    position: absolute; top: calc(100% - 2px); left: 16px; right: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    padding: 8px; gap: 2px;
+    flex-direction: column; align-items: stretch;
+  }
+  .nav-links.open { display: flex; }
+  .nav-link { padding: 11px 14px; font-size: 14px; }
+  .nav-divider { display: none; }
+  .btn-nav-add { text-align: center; margin-top: 4px; }
+}
+
+/* ==========================================================
+   Arabic typography & RTL
+   ========================================================== */
+html[lang="ar"] body { font-family: "Cairo", "Segoe UI", Tahoma, sans-serif; }
+html[lang="ar"] * { letter-spacing: 0; }
+
+[dir="rtl"] .select { background-position: left 13px center; padding-left: 36px; padding-right: 13px; }
+[dir="rtl"] .status-select { background-position: left 10px center; padding-left: 30px; padding-right: 15px; }
+[dir="rtl"] .back-link svg { transform: scaleX(-1); }
+[dir="rtl"] .toast-wrap { right: auto; left: 22px; }
+[dir="rtl"] .nav-logout { text-align: right; }
+
+/* ==========================================================
+   Phones & small tablets
+   ========================================================== */
+@media (max-width: 640px) {
+  .page-title, .dash-title { font-size: 21px; }
+  .about-title { font-size: 25px; }
+
+  .auth-title { font-size: 20px; }
+  .auth-banner-title { font-size: 20px; }
+  .form-card { padding: 22px 18px; }
+  .tabs { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .item-card { flex-wrap: wrap; }
+  .item-info { flex-basis: calc(100% - 96px); }
+  .item-actions { width: 100%; justify-content: flex-end; }
+  .status-select { flex: 1; text-align: center; }
+  .icon-btn { width: 40px; height: 40px; }
+  .dash-main { padding-top: 16px; }
+  .page-header { align-items: flex-start; }
+  .empty-state { padding: 38px 16px; }
+  .activity-card { padding: 18px; }
+  .stat-card { padding: 17px; }
+  .stat-value { font-size: 24px; }
+  .footer-inner { justify-content: center; text-align: center; flex-direction: column; gap: 6px; }
+  .navbar-inner { padding-left: 12px; padding-right: 12px; }
+}
+
+/* ==========================================================
+   Add Item — price input & upload text layout
+   ========================================================== */
+.upload-box { position: relative; }
+.upload-text { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 14px; }
+
+.price-row { position: relative; width: 100%; }
+.price-row .input { padding-right: 58px; }
+.price-unit {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 13px; font-weight: 600; color: var(--text-500);
+  pointer-events: none;
+}
+[dir="rtl"] .price-row .input { padding-right: 13px; padding-left: 58px; }
+[dir="rtl"] .price-unit { right: auto; left: 14px; }

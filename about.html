@@ -4,63 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JariShare — About</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M8 14.5 16 8l8 6.5M10.5 13.5V24h11V13.5' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M6 16 16 8l10 8M10 15v9h12v-9' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script>
+    /* Apply saved theme before first paint */
+    (function () {
+      try {
+        var t = localStorage.getItem("jariTheme");
+        if (t !== "dark" && t !== "light") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="lang.js"></script>
 </head>
 <body>
+  <main class="page-shell">
 
-  <main style="width:100%;max-width:1040px;margin:0 auto;padding:10px 24px 60px;flex:1">
+    <div class="about-hero">
+      <span class="about-kicker">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 11.2 6.5 7.8l4 3.4V19h-8z"/><path d="M21.5 11.2 17.5 7.8l-4 3.4V19h8z"/></svg>
+        <span data-i18n="about.kicker">Our Story</span>
+      </span>
+      <h1 class="about-title" data-i18n="about.title">Built for neighbors, powered by trust.</h1>
+      <p class="about-lead" data-i18n="about.lead">JariShare is a community sharing platform that connects people living in the same area. Post the tools, gear and household items you rarely use — let neighbors rent them at a fair daily price or borrow them for free. Less waste, less spending, and a street that actually works together.</p>
+    </div>
 
-    <!-- Hero -->
-    <section class="about-hero">
-      <span class="about-kicker">Our Story</span>
-      <h1 class="about-title">Built for neighbors, powered by trust.</h1>
-      <p class="about-lead">
-        JariShare is a community sharing platform that connects people living in the same area.
-        Post the tools, gear and household items you rarely use — let neighbors rent them at a fair
-        daily price or borrow them for free. Less waste, less spending, and a street that actually works together.
-      </p>
-    </section>
+    <div class="values-grid">
+      <article class="value-card">
+        <span class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+        </span>
+        <h2 class="value-title" data-i18n="about.v1t">Share &amp; Borrow</h2>
+        <p class="value-text" data-i18n="about.v1d">Give the items sitting in your storage a second life. Someone on your street probably needs exactly what you're not using.</p>
+      </article>
 
-    <!-- Values -->
-    <section class="values-grid">
-      <div class="value-card">
-        <div class="value-icon">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-        </div>
-        <h3 class="value-title">Share &amp; Borrow</h3>
-        <p class="value-text">Give the items sitting in your storage a second life. Someone on your street probably needs exactly what you're not using.</p>
-      </div>
+      <article class="value-card">
+        <span class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <h2 class="value-title" data-i18n="about.v2t">Safe &amp; Local</h2>
+        <p class="value-text" data-i18n="about.v2d">Every interaction happens between verified neighbors within the same city and district — real people, real addresses, real accountability.</p>
+      </article>
 
-      <div class="value-card">
-        <div class="value-icon">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.09 5.75c-.62 0-1.13.45-1.13 1 0 .23.09.45.26.62l2.96 2.96c.17.17.39.26.62.26.55 0 1-.51 1-1.13V5.75Z"/><path d="m21.44 11.05-9-9C11.99 1.6 10.91 1 9.5 1h-.55C7.78 1 6.8 1.5 6.19 2.28L2 7.5V9.75h2.25L11 2.5l7.5 7.5-6 6-1.5-1.5-1.94 1.94 1.72 1.72c.4.39 1.03.39 1.42 0l8.24-8.24c.55-.55.55-1.87 0-2.37Z"/></svg>
-        </div>
-        <h3 class="value-title">Safe &amp; Local</h3>
-        <p class="value-text">Every interaction happens between verified neighbors within the same city and district — real people, real addresses, real accountability.</p>
-      </div>
+      <article class="value-card">
+        <span class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+        </span>
+        <h2 class="value-title" data-i18n="about.v3t">Smarter Consumption</h2>
+        <p class="value-text" data-i18n="about.v3d">Why buy a drill you'll use twice a year? Sharing cuts household spending and keeps perfectly good items out of the bin.</p>
+      </article>
+    </div>
 
-      <div class="value-card">
-        <div class="value-icon">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 4 2 7 4 9h8c2-2 4-5 4-9a8 8 0 0 0-8-8Z"/><path d="M10 19v2h4v-2M12 6v4"/></svg>
-        </div>
-        <h3 class="value-title">Smarter Consumption</h3>
-        <p class="value-text">Why buy a drill you'll use twice a year? Sharing cuts household spending and keeps perfectly good items out of the bin.</p>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="about-cta">
-      <h2 class="cta-title">Your neighborhood is already sharing.</h2>
-      <p class="cta-text">Create a free account in under a minute and see what people around you are offering today.</p>
+    <div class="about-cta">
+      <h2 class="cta-title" data-i18n="about.ctaTitle">Your neighborhood is already sharing.</h2>
+      <p class="cta-text" data-i18n="about.ctaText">Create a free account in under a minute and see what people around you are offering today.</p>
       <div class="cta-actions">
-        <a class="btn cta-btn-light" href="register.html">Create Account</a>
-        <a class="btn cta-btn-outline" href="login.html">Log In</a>
+        <a class="btn btn-lg cta-btn-light" href="register.html" data-i18n="nav.createAccount">Create Account</a>
+        <a class="btn btn-lg cta-btn-outline" href="login.html" data-i18n="log.btn">Log In</a>
       </div>
-    </section>
+    </div>
 
   </main>
 

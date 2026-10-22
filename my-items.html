@@ -4,150 +4,200 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JariShare — My Items</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M8 14.5 16 8l8 6.5M10.5 13.5V24h11V13.5' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M6 16 16 8l10 8M10 15v9h12v-9' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script>
+    /* Apply saved theme before first paint */
+    (function () {
+      try {
+        var t = localStorage.getItem("jariTheme");
+        if (t !== "dark" && t !== "light") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="lang.js"></script>
 </head>
-<body id="page-my-items">
-
+<body>
   <main class="page-shell">
     <a class="back-link" href="dashboard.html">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      Dashboard
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <span data-i18n="items.backDash">Dashboard</span>
     </a>
 
-    <header class="page-header">
+    <div class="page-header">
       <div>
-        <h1 class="page-title">My Items</h1>
-        <p class="page-subtitle">Everything you've listed for your neighbors — switch status, edit details or remove a listing at any time.</p>
+        <h1 class="page-title" data-i18n="items.title">My Items</h1>
+        <p class="page-subtitle" data-i18n="items.subtitle">Everything you've listed for your neighbors — switch status, edit details or remove a listing at any time.</p>
       </div>
-      <a class="btn btn-primary" href="add-item.html">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-        Post an Item
-      </a>
-    </header>
-
-    <!-- Status filters -->
-    <div class="tabs" id="status-tabs" role="tablist">
-      <button class="tab active" data-filter="all"><span class="dot dot-all"></span>All</button>
-      <button class="tab" data-filter="active"><span class="dot dot-active"></span>Active</button>
-      <button class="tab" data-filter="pending"><span class="dot dot-pending"></span>Pending</button>
-      <button class="tab" data-filter="unavailable"><span class="dot dot-unavailable"></span>Unavailable</button>
+      <a class="btn btn-primary" href="add-item.html" data-i18n="nav.postItem">Post an Item</a>
     </div>
 
-    <!-- Listings (rendered from localStorage) -->
-    <div class="items-list" id="items-list"></div>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" data-filter="all" data-i18n="items.tabAll">All</button>
+      <button type="button" class="tab" data-filter="active" data-i18n="status.active">Active</button>
+      <button type="button" class="tab" data-filter="pending" data-i18n="status.pending">Pending</button>
+      <button type="button" class="tab" data-filter="unavailable" data-i18n="status.unavailable">Unavailable</button>
+    </div>
+
+    <div id="items-list" class="items-list"></div>
   </main>
 
-  <script>
-    let items       = JSON.parse(localStorage.getItem("jariItems")) || [];
-    let activeFilter = "all";
-    const listEl = document.getElementById("items-list");
-
-    const ICON_EDIT = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>';
-    const ICON_TRASH = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6"/></svg>';
-
-    function logNotification(text) {
-      const notifs = JSON.parse(localStorage.getItem("jariNotifications")) || [];
-      notifs.unshift({ text: text, time: new Date().toLocaleString() });
-      localStorage.setItem("jariNotifications", JSON.stringify(notifs.slice(0, 50)));
-    }
-
-    function render() {
-      const visible = items
-        .map((item, index) => ({ item: item, index: index }))
-        .filter(function (v) { return activeFilter === "all" || (v.item.status || "active") === activeFilter; });
-
-      if (visible.length === 0) {
-        const label = activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1);
-        listEl.innerHTML =
-          '<div class="empty-state">' +
-            '<div class="empty-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></div>' +
-            '<p class="empty-title">' + (activeFilter === "all" ? "No items listed yet" : "Nothing with a “" + label + "” status") + '</p>' +
-            '<p class="empty-text">' + (activeFilter === "all" ? "Post your first item and it will appear here for neighbors to request." : "Try another filter, or post a new item.") + '</p>' +
-            '<div class="empty-action"><a class="btn btn-primary btn-sm" href="add-item.html">Post an Item</a></div>' +
-          "</div>";
-        return;
-      }
-
-      listEl.innerHTML = visible.map(function (v) {
-        const status = v.item.status || "active";
-        const label  = status.charAt(0).toUpperCase() + status.slice(1);
-        return (
-          '<article class="item-card" data-index="' + v.index + '">' +
-            '<img class="item-thumb" src="' + (v.item.image || "images/tools.jpg.jpeg") + '" alt="' + v.item.name + '">' +
-            '<div class="item-info">' +
-              '<h3 class="item-name">' + v.item.name + "</h3>" +
-              '<p class="item-price">' + v.item.price + ' EGP <span style="color:var(--text-500);font-weight:500">/ day</span></p>' +
-              '<p class="item-cat">' + (v.item.category || "Other") + (v.item.sharingType === "Borrow" ? " · Free borrow" : "") + "</p>" +
-            "</div>" +
-            '<div class="item-actions">' +
-              '<select class="status-select st-' + status + '" aria-label="Item status">' +
-                '<option value="active"'      + (status === "active" ? " selected" : "")      + ">Active</option>" +
-                '<option value="pending"'     + (status === "pending" ? " selected" : "")     + ">Pending</option>" +
-                '<option value="unavailable"' + (status === "unavailable" ? " selected" : "") + ">Unavailable</option>" +
-              "</select>" +
-              '<button class="icon-btn" data-act="edit" title="Edit item" aria-label="Edit item">' + ICON_EDIT + "</button>" +
-              '<button class="icon-btn danger" data-act="delete" title="Delete item" aria-label="Delete item">' + ICON_TRASH + "</button>" +
-            "</div>" +
-          "</article>"
-        );
-      }).join("");
-    }
-
-    /* Event delegation — one listener for the whole list */
-    listEl.addEventListener("click", async function (e) {
-      const card = e.target.closest(".item-card");
-      if (!card) return;
-      const index = Number(card.dataset.index);
-
-      if (e.target.closest('[data-act="edit"]')) {
-        window.location.href = "add-item.html?index=" + index;
-        return;
-      }
-
-      if (e.target.closest('[data-act="delete"]')) {
-        const name = items[index].name;
-        const ok = await Jari.confirm("Delete “" + name + "”?", "This listing will be removed permanently. Neighbors can no longer request it.", "Delete");
-        if (!ok) return;
-        items.splice(index, 1);
-        localStorage.setItem("jariItems", JSON.stringify(items));
-        logNotification('Your listing "' + name + '" was deleted.');
-        Jari.toast("Item deleted.", "info");
-        render();
-      }
-    });
-
-    listEl.addEventListener("change", function (e) {
-      const select = e.target.closest(".status-select");
-      if (!select) return;
-      const card = select.closest(".item-card");
-      const index = Number(card.dataset.index);
-      const newStatus = select.value;
-
-      items[index].status = newStatus;
-      localStorage.setItem("jariItems", JSON.stringify(items));
-      logNotification('Status of "' + items[index].name + '" changed to ' + newStatus + ".");
-
-      select.classList.remove("st-active", "st-pending", "st-unavailable");
-      select.classList.add("st-" + newStatus);
-      Jari.toast("Status updated to " + newStatus + ".");
-    });
-
-    document.getElementById("status-tabs").addEventListener("click", function (e) {
-      const tab = e.target.closest(".tab");
-      if (!tab) return;
-      document.querySelectorAll("#status-tabs .tab").forEach(function (t) { t.classList.remove("active"); });
-      tab.classList.add("active");
-      activeFilter = tab.dataset.filter;
-      render();
-    });
-
-    render();
-  </script>
-
   <script src="components.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var listEl = document.getElementById("items-list");
+      var activeFilter = "all";
+
+      function catKey(cat) {
+        var map = { "Electronics": "cat.electronics", "Tools": "cat.tools", "Home & Kitchen": "cat.home", "Outdoor": "cat.outdoor", "Other": "cat.other" };
+        return map[cat] || "cat.other";
+      }
+
+      function render() {
+        var email = localStorage.getItem("jariCurrentUser") || "";
+        var items = JSON.parse(localStorage.getItem("jariItems")) || [];
+        var mine = items.filter(function (it) { return it.owner === email; });
+
+        if (activeFilter !== "all") {
+          mine = mine.filter(function (it) { return (it.status || "active") === activeFilter; });
+        }
+
+        if (!mine.length) {
+          var isFiltered = activeFilter !== "all";
+          listEl.innerHTML =
+            '<div class="empty-state">' +
+              '<div class="empty-icon">' +
+                '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5 7 4h10l4 3.5M3 7.5V19a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7.5M3 7.5h18M9 11h6"/></svg>' +
+              "</div>" +
+              '<h3 class="empty-title"></h3>' +
+              '<p class="empty-text"></p>' +
+              (isFiltered
+                ? '<div class="empty-action"><a class="btn btn-ghost btn-sm" href="add-item.html" data-i18n="nav.postItem">Post an Item</a></div>'
+                : "") +
+            "</div>";
+          listEl.querySelector(".empty-title").textContent = Jari.t(isFiltered ? "items.emptyFilterTitle" : "items.emptyAllTitle", isFiltered ? { name: Jari.t("status." + activeFilter) } : null);
+          listEl.querySelector(".empty-text").textContent = Jari.t(isFiltered ? "items.emptyFilterText" : "items.emptyAllText");
+          return;
+        }
+
+        /* newest first */
+        mine = mine.slice().reverse();
+
+        listEl.innerHTML = mine.map(function (it) {
+          var globalIdx = items.indexOf(it);
+          var price = Number(it.price) > 0
+            ? "<strong>" + Number(it.price).toLocaleString("en-US") + "</strong> <span>" + Jari.t("items.perDay") + "</span>"
+            : "<strong>" + Jari.t("cat.freeBorrow") + "</strong>";
+          var photo = it.photo ? it.photo : "images/tools.jpg.jpeg";
+          return (
+            '<article class="item-card" data-idx="' + globalIdx + '">' +
+              '<img class="item-thumb" src="' + photo + '" alt="">' +
+              '<div class="item-info">' +
+                '<h3 class="item-name"></h3>' +
+                '<span class="item-cat"></span>' +
+                '<span class="item-price">' + price + "</span>" +
+              "</div>" +
+              '<div class="item-actions">' +
+                '<select class="status-select st-' + (it.status || "active") + '" data-act="status" aria-label="' + Jari.t("items.a11yStatus") + '">' +
+                  ["active", "pending", "unavailable"].map(function (s) {
+                    return '<option value="' + s + '"' + (s === (it.status || "active") ? " selected" : "") + ">" + Jari.t("status." + s) + "</option>";
+                  }).join("") +
+                "</select>" +
+                '<button type="button" class="icon-btn" data-act="edit" data-i18n-aria="items.a11yEdit" title="' + Jari.t("items.a11yEdit") + '">' +
+                  '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>' +
+                "</button>" +
+                '<button type="button" class="icon-btn danger" data-act="delete" data-i18n-aria="items.a11yDelete" title="' + Jari.t("items.a11yDelete") + '">' +
+                  '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14Z"/></svg>' +
+                "</button>" +
+              "</div>" +
+            "</article>"
+          );
+        }).join("");
+
+        /* Fill text nodes (avoids HTML injection from stored names) */
+        Array.prototype.forEach.call(listEl.querySelectorAll(".item-card"), function (card) {
+          var it = items[Number(card.dataset.idx)];
+          card.querySelector(".item-name").textContent = it.name;
+          card.querySelector(".item-cat").textContent = Jari.t(catKey(it.category));
+          if (it.description) {
+            var d = document.createElement("p");
+            d.className = "item-cat";
+            d.style.fontSize = "12.5px";
+            d.style.marginTop = "2px";
+            d.textContent = it.description;
+            card.querySelector(".item-price").after(d);
+          }
+        });
+      }
+
+      listEl.addEventListener("change", function (e) {
+        var sel = e.target.closest("select[data-act='status']");
+        if (!sel) return;
+        var card = sel.closest(".item-card");
+        var idx = Number(card.dataset.idx);
+
+        var items = JSON.parse(localStorage.getItem("jariItems")) || [];
+        var it = items[idx];
+        var old = it.status || "active";
+        var next = sel.value;
+        it.status = next;
+        items[idx] = it;
+        localStorage.setItem("jariItems", JSON.stringify(items));
+
+        var notes = JSON.parse(localStorage.getItem("jariNotifications")) || [];
+        notes.unshift({ title: Jari.t("notif.status", { name: it.name, status: Jari.t("status." + next) }), date: new Date().toISOString(), read: false });
+        localStorage.setItem("jariNotifications", JSON.stringify(notes));
+
+        sel.className = "status-select st-" + next;
+        Jari.toast(Jari.t("toast.statusUpdated", { name: Jari.t("status." + next) }), "success");
+
+        if (activeFilter !== "all" && activeFilter !== next) render();
+      });
+
+      listEl.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-act='edit'], [data-act='delete']");
+        if (!btn) return;
+        var card = btn.closest(".item-card");
+        var idx = Number(card.dataset.idx);
+        var items = JSON.parse(localStorage.getItem("jariItems")) || [];
+
+        if (btn.dataset.act === "edit") {
+          window.location.href = "add-item.html?index=" + idx;
+          return;
+        }
+
+        var name = items[idx] ? items[idx].name : "";
+        Jari.confirm(Jari.t("confirm.deleteTitle", { name: name }), Jari.t("confirm.deleteText"), Jari.t("confirm.delete"))
+          .then(function (ok) {
+            if (!ok) { render(); return; }
+            items.splice(idx, 1);
+            localStorage.setItem("jariItems", JSON.stringify(items));
+            var notes = JSON.parse(localStorage.getItem("jariNotifications")) || [];
+            notes.unshift({ title: Jari.t("notif.deleted", { name: name }), date: new Date().toISOString(), read: false });
+            localStorage.setItem("jariNotifications", JSON.stringify(notes));
+            Jari.toast(Jari.t("toast.deleted"), "success");
+            render();
+          });
+      });
+
+      document.querySelector(".tabs").addEventListener("click", function (e) {
+        var tab = e.target.closest(".tab");
+        if (!tab) return;
+        activeFilter = tab.dataset.filter;
+        Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
+          t.classList.toggle("active", t === tab);
+        });
+        render();
+      });
+
+      document.addEventListener("jari:langchange", render);
+      document.addEventListener("DOMContentLoaded", render);
+    })();
+  </script>
 </body>
 </html>

@@ -4,11 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JariShare — Log In</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M8 14.5 16 8l8 6.5M10.5 13.5V24h11V13.5' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235B4EE6'/%3E%3Cpath d='M6 16 16 8l10 8M10 15v9h12v-9' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script>
+    /* Apply saved theme before first paint */
+    (function () {
+      try {
+        var t = localStorage.getItem("jariTheme");
+        if (t !== "dark" && t !== "light") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="lang.js"></script>
 </head>
 <body class="auth-page" id="page-login">
 
@@ -18,63 +29,68 @@
     <aside class="auth-banner">
       <div class="auth-brand">
         <span class="brand-mark">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path class="logo-house-l" d="M2.5 11.2 6.5 7.8l4 3.4V19h-8z"/>
+            <path class="logo-house-r" d="M21.5 11.2 17.5 7.8l-4 3.4V19h8z"/>
+            <g class="logo-item"><rect x="10.6" y="9.6" width="2.8" height="2.8" rx="0.7" fill="currentColor" stroke="none"/></g>
+          </svg>
         </span>
         JariShare
       </div>
 
       <div class="auth-banner-main">
-        <h2 class="auth-banner-title">Welcome back to your neighborhood.</h2>
-        <p class="auth-banner-text">Sign in to manage your listings, follow rental requests and stay in touch with your neighbors.</p>
+        <h2 class="auth-banner-title" data-i18n="log.bannerTitle">Welcome back to your neighborhood.</h2>
+        <p class="auth-banner-text" data-i18n="log.bannerText">Sign in to manage your listings, follow rental requests and stay in touch with your neighbors.</p>
       </div>
 
-      <p class="auth-banner-foot">Your items, your neighbors, one platform.</p>
+      <p class="auth-banner-foot" data-i18n="log.foot">Your items, your neighbors, one platform.</p>
     </aside>
 
     <!-- Form side -->
     <section class="auth-form-side">
-      <h1 class="auth-title">Log in</h1>
-      <p class="auth-subtitle">Enter your details to continue to your dashboard.</p>
+      <h1 class="auth-title" data-i18n="log.title">Log in</h1>
+      <p class="auth-subtitle" data-i18n="log.subtitle">Enter your details to continue to your dashboard.</p>
 
       <form id="login-form" novalidate>
         <div class="field">
-          <label class="label" for="login-email">Email address</label>
-          <input type="email" id="login-email" class="input" placeholder="you@example.com" autocomplete="email" required>
+          <label class="label" for="login-email" data-i18n="reg.email">Email address</label>
+          <input type="email" id="login-email" class="input" data-i18n-ph="reg.emailPh" placeholder="you@example.com" autocomplete="email" required>
         </div>
 
         <div class="field">
-          <label class="label" for="login-pass">Password</label>
-          <input type="password" id="login-pass" class="input" placeholder="Your password" autocomplete="current-password" required>
+          <label class="label" for="login-pass" data-i18n="reg.pass">Password</label>
+          <input type="password" id="login-pass" class="input" data-i18n-ph="log.passPh" placeholder="Your password" autocomplete="current-password" required>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Log In</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" data-i18n="log.btn">Log In</button>
 
-        <p class="auth-alt">New to JariShare? <a href="register.html">Create an account</a></p>
+        <p class="auth-alt"><span data-i18n="log.alt">New to JariShare?</span> <a href="register.html" data-i18n="log.altLink">Create an account</a></p>
       </form>
     </section>
 
   </main>
 
+  <script src="components.js"></script>
   <script>
+    /* components.js provides Jari.t / Jari.toast */
     document.getElementById("login-form").addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const email    = document.getElementById("login-email").value.trim().toLowerCase();
-      const password = document.getElementById("login-pass").value;
+      var email    = document.getElementById("login-email").value.trim().toLowerCase();
+      var password = document.getElementById("login-pass").value;
 
-      const users = JSON.parse(localStorage.getItem("jariUsers")) || [];
-      const user  = users.find(u => u.email === email && u.password === password);
-
-      if (!user) {
-        return Jari.toast("Incorrect email or password. Please try again.", "error");
+      var users = JSON.parse(localStorage.getItem("jariUsers")) || [];
+      var user = null;
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].email === email && users[i].password === password) { user = users[i]; break; }
       }
 
-      localStorage.setItem("jariCurrentUser", user.email);
-      Jari.flash("Welcome back, " + user.name.split(" ")[0] + ".");
+      if (!user) return Jari.toast(Jari.t("toast.loginError"), "error");
+
+      localStorage.setItem("jariCurrentUser", email);
+      Jari.flash(Jari.t("toast.welcomeBack", { name: user.name.split(" ")[0] }));
       window.location.href = "dashboard.html";
     });
   </script>
-
-  <script src="components.js"></script>
 </body>
 </html>
