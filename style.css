@@ -272,9 +272,10 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
 }
 .brand-mark {
   width: 30px; height: 30px; border-radius: 9px;
-  background: var(--gradient-brand);
   display: grid; place-items: center; flex: none;
+  overflow: hidden;
 }
+.brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .nav-links { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; }
 .nav-link {
   padding: 8px 13px; border-radius: 9px;
@@ -430,7 +431,7 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
   font-size: 19px; font-weight: 800; letter-spacing: -0.02em;
   position: relative; z-index: 1;
 }
-.auth-brand .brand-mark { background: rgba(255,255,255,.18); width: 32px; height: 32px; border-radius: 10px; }
+.auth-brand .brand-mark { width: 32px; height: 32px; border-radius: 10px; }
 .auth-banner-main { margin-top: auto; position: relative; z-index: 1; }
 .auth-banner-title { font-size: 25px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
 .auth-banner-text { font-size: 14.5px; line-height: 1.65; color: rgba(255,255,255,.88); max-width: 300px; }
@@ -865,21 +866,8 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
 .st-unavailable { background-color: var(--st-unavailable-bg); color: var(--st-unavailable-fg); background-image: var(--st-unavailable-arrow); }
 
 /* ==========================================================
-   Animated brand mark — an item traveling between two homes
+   Brand mark — the 3D icon artwork (images/icon.png)
    ========================================================== */
-.logo-item { animation: logo-swap 2.9s ease-in-out infinite; }
-.logo-house-l { animation: logo-dim-l 2.9s ease-in-out infinite; }
-.logo-house-r { animation: logo-dim-r 2.9s ease-in-out infinite; }
-@keyframes logo-swap {
-  0%, 14%   { transform: translateX(0); }
-  43%, 57%  { transform: translateX(6.5px); }
-  86%, 100% { transform: translateX(0); }
-}
-@keyframes logo-dim-l { 0%, 14% { opacity: 1; } 43%, 57% { opacity: .4; } 86%, 100% { opacity: 1; } }
-@keyframes logo-dim-r { 0%, 14% { opacity: .4; } 43%, 57% { opacity: 1; } 86%, 100% { opacity: .4; } }
-@media (prefers-reduced-motion: reduce) {
-  .logo-item, .logo-house-l, .logo-house-r { animation: none; }
-}
 
 /* ==========================================================
    Navbar tools — theme & language switches

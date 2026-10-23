@@ -193,12 +193,7 @@
     /* --------------------------------------------------------
         Brand (animated) & icons
        -------------------------------------------------------- */
-    var BRAND_MARK =
-      '<svg class="jari-logo" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path class="logo-house-l" d="M2.5 11.2 6.5 7.8l4 3.4V19h-8z"/>' +
-        '<path class="logo-house-r" d="M21.5 11.2 17.5 7.8l-4 3.4V19h8z"/>' +
-        '<g class="logo-item"><rect x="10.6" y="9.6" width="2.8" height="2.8" rx="0.7" fill="currentColor" stroke="none"/></g>' +
-      "</svg>";
+    var BRAND_MARK = '<img class="jari-logo" src="images/icon.png" alt="" aria-hidden="true">';
 
     /* --------------------------------------------------------
         Theme & language switches
