@@ -197,6 +197,24 @@
       "about.ctaTitle": "Your neighborhood is already sharing.",
       "about.ctaText": "Create a free account in under a minute and see what people around you are offering today.",
 
+      /* Landing page */
+      "index.badge": "Neighborhood sharing platform",
+      "index.title": "Your street, one shared toolbox.",
+      "index.lead": "JariShare connects neighbors in the same district — post the drill, ladder or sewing machine you barely use, and rent what you need from the people next door at a fair daily price.",
+      "index.ctaStart": "Create Account",
+      "index.ctaLogin": "Log In",
+      "index.statShared": "items shared",
+      "index.statNeighbors": "active neighbors",
+      "index.statRating": "satisfaction score",
+      "index.howKicker": "How it works",
+      "index.howTitle": "Three steps between you and your neighbors.",
+      "index.s1t": "Post your items",
+      "index.s1d": "Add what you can share with a photo, a fair daily price and your district — it takes less than a minute.",
+      "index.s2t": "Neighbors send requests",
+      "index.s2d": "People living around you browse and send rental requests directly, with the dates they need.",
+      "index.s3t": "Pick up & return",
+      "index.s3d": "Approve the request, meet nearby, and track every item's status from your dashboard.",
+
       /* Footer */
       "footer.tag": "Neighborhood sharing made simple."
     },
@@ -391,6 +409,24 @@
       "about.v3d": "لماذا تشتري دريلاً ستستخدمه مرتين في السنة؟ المشاركة تقلل مصروف البيت وتحافظ على الأغراض الصالحة من الضياع.",
       "about.ctaTitle": "حيّك يتشارك بالفعل.",
       "about.ctaText": "أنشئ حساباً مجانياً في أقل من دقيقة وشاهد ما يعرضه من حولك اليوم.",
+
+      /* صفحة البداية */
+      "index.badge": "منصة مشاركة الأحياء",
+      "index.title": "شارعتك كلها، صندوق أدوات مشترك واحد.",
+      "index.lead": "جاريشير بيربط جيران نفس الحي — انشر الدريل أو السلم أو ماكينة الخياطة اللي بتستخدمها نادراً، واستاجر اللي محتاجه من ناس جنبك بسعر يومي عادل.",
+      "index.ctaStart": "إنشاء حساب",
+      "index.ctaLogin": "دخول",
+      "index.statShared": "أغراض مشتركة",
+      "index.statNeighbors": "جيران نشطين",
+      "index.statRating": "رضا المستخدمين",
+      "index.howKicker": "إزاي بيشتغل",
+      "index.howTitle": "ثلاث خطوات بينك وبين جيرانك.",
+      "index.s1t": "انشر أغراضك",
+      "index.s1d": "ضيف اللي تقدر تشاركه بصورة وسعر يومي عادل وحيّك — في أقل من دقيقة.",
+      "index.s2t": "الجيران يبعتوا طلبات",
+      "index.s2d": "الناس اللي حواليك تتفرج وتبعت طلب إجارة مباشرة، بالتواريخ اللي محتاجها.",
+      "index.s3t": "استلم وردّه",
+      "index.s3d": "وافق على الطلب، اتفق على التسليم قريب منك، وتابع حالة كل غرض من لوحة التحكم.",
 
       /* Footer */
       "footer.tag": "المشاركة بين الجيران، ببساطة."

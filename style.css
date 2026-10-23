@@ -977,6 +977,47 @@ html[lang="ar"] * { letter-spacing: 0; }
 [dir="rtl"] .price-unit { right: auto; left: 14px; }
 
 /* ==========================================================
+   Landing page (index.html)
+   ========================================================== */
+.home-hero {
+  position: relative; overflow: hidden;
+  background: var(--gradient-brand);
+  border-radius: 24px;
+  color: #fff; text-align: center;
+  padding: 62px 44px 56px;
+  margin: 22px 0 42px;
+}
+.home-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("images/auth-bg.jpg") center / cover no-repeat;
+}
+.home-hero::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(26, 19, 88, .88) 0%,
+    rgba(34, 25, 108, .62) 46%,
+    rgba(40, 30, 124, .6) 100%);
+  pointer-events: none;
+}
+.home-hero-inner { position: relative; z-index: 1; max-width: 660px; margin: 0 auto; }
+.home-title { font-size: 38px; font-weight: 800; letter-spacing: -0.03em; margin: 20px 0 13px; }
+.home-lead { font-size: 15.5px; line-height: 1.75; color: rgba(255,255,255,.9); max-width: 580px; margin: 0 auto 28px; }
+.home-hero .banner-stats { max-width: 520px; margin: 34px auto 0; }
+.home-how { text-align: center; margin-bottom: 8px; }
+.how-title { font-size: 27px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-900); margin: 14px 0 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero::before {
+    animation: bannerDrift 48s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+}
+@media (max-width: 760px) {
+  .home-hero { padding: 44px 22px 40px; border-radius: 20px; }
+  .home-title { font-size: 28px; }
+  .home-lead { font-size: 14px; }
+}
+
+/* ==========================================================
    Auth pages — v2 polish
    ========================================================== */
 .banner-badge {
