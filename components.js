@@ -244,6 +244,41 @@
     tools.appendChild(langBtn);
 
     /* --------------------------------------------------------
+        Page type — auth pages get a minimal brand bar,
+        app pages get the full navbar + footer
+       -------------------------------------------------------- */
+    var isAuth = ["login.html", "register.html"].indexOf(page) !== -1;
+
+    /* Translate every static [data-i18n] element (also re-used below) */
+    function applyNavI18n() {
+      Array.prototype.forEach.call(document.querySelectorAll("[data-i18n]"), function (el) {
+        el.textContent = Jari.t(el.getAttribute("data-i18n"));
+      });
+    }
+
+    if (isAuth) {
+      var topbar = document.createElement("header");
+      topbar.className = "auth-topbar";
+      topbar.innerHTML =
+        '<div class="auth-topbar-inner">' +
+          '<a class="nav-brand" href="about.html">' +
+            '<span class="brand-mark">' + BRAND_MARK + "</span>JariShare" +
+          "</a>" +
+        "</div>";
+      topbar.querySelector(".auth-topbar-inner").appendChild(tools);
+      document.body.prepend(topbar);
+
+      applyNavI18n();
+      setTimeout(applyNavI18n, 0);
+      document.dispatchEvent(new CustomEvent("jari:langchange"));
+      document.addEventListener("jari:langchange", function () {
+        syncLangToggle(langBtn);
+        syncThemeToggle(themeBtn);
+      });
+      return;
+    }
+
+    /* --------------------------------------------------------
         Navbar — adapts to visitor state
        -------------------------------------------------------- */
     var logged = !!sessionEmail;
@@ -304,14 +339,7 @@
     });
 
     /* Re-apply translations once lang.js finishes its DOM pass */
-    setTimeout(function () {
-      if (typeof applyNavI18n === "function") applyNavI18n();
-    }, 0);
-    function applyNavI18n() {
-      Array.prototype.forEach.call(document.querySelectorAll("[data-i18n]"), function (el) {
-        el.textContent = Jari.t(el.getAttribute("data-i18n"));
-      });
-    }
+    setTimeout(applyNavI18n, 0);
 
     var logoutBtn = document.getElementById("nav-logout");
     if (logoutBtn) {

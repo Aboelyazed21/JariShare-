@@ -1032,15 +1032,44 @@ html[lang="ar"] * { letter-spacing: 0; }
   .auth-banner-main > *:nth-child(5) { animation-delay: .28s; }
 }
 
-@media (max-width: 640px) {
-  .auth-banner { padding: 26px 22px; }
-  .auth-banner-title { font-size: 20px; }
-  .auth-banner-text { font-size: 13px; }
+/* ==========================================================
+   Auth pages — v3: minimal brand bar, lighter banner,
+   form-first on mobile
+   ========================================================== */
+.auth-page { display: flex; flex-direction: column; padding: 0 20px 26px; }
+.auth-card { margin: auto; border-radius: 26px; }
+
+.auth-topbar { width: 100%; padding: 22px 0 6px; }
+.auth-topbar-inner {
+  width: 100%; max-width: 960px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.auth-topbar .nav-brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 17.5px; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--text-900); text-decoration: none;
+}
+.auth-topbar .brand-mark { width: 30px; height: 30px; border-radius: 9px; }
+
+.banner-pattern { opacity: .045; background-size: 88px; }
+.banner-stat {
+  background: rgba(255, 255, 255, .10);
+  border-radius: 12px; padding: 12px 8px 10px;
+  backdrop-filter: none;
+}
+.banner-stat .num { font-size: 15px; }
+
+@media (max-width: 960px) {
+  .auth-banner { padding: 30px 26px; }
+  .auth-banner-text { max-width: none; }
   .auth-points { display: none; }
-  .banner-stats { margin-top: 18px; gap: 8px; }
-  .banner-stat { padding: 10px 6px 9px; border-radius: 12px; }
-  .banner-stat .num { font-size: 14px; }
-  .banner-stat .lbl { font-size: 9.5px; }
-  .banner-glow { filter: blur(46px); }
-  .auth-form-side { padding: 30px 22px 28px; }
+  .banner-stats { margin-top: 20px; }
+  .banner-stat .lbl { font-size: 10px; }
+}
+@media (max-width: 640px) {
+  .auth-banner { display: none; }
+  .auth-page { padding: 0 14px 20px; }
+  .auth-topbar { padding: 16px 0 4px; }
+  .auth-title { font-size: 21px; }
+  .auth-form-side { padding: 26px 20px 24px; }
 }
