@@ -390,11 +390,40 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
   padding: 46px 42px;
   display: flex; flex-direction: column;
   position: relative;
+  overflow: hidden;
 }
+/* The 3D neighborhood artwork as the banner background */
+.auth-banner::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("images/auth-bg.jpg") center / cover no-repeat;
+}
+/* Indigo readability layer so the white copy stays crisp over the photo */
 .auth-banner::after {
   content: ""; position: absolute; inset: 0;
-  background: radial-gradient(420px 260px at 90% 0%, rgba(255,255,255,.14), transparent 65%);
+  background: linear-gradient(102deg,
+    rgba(30, 22, 98, .95) 0%,
+    rgba(40, 30, 124, .74) 36%,
+    rgba(52, 40, 152, .36) 70%,
+    rgba(58, 45, 160, .2) 100%);
   pointer-events: none;
+}
+/* RTL text hugs the banner's right edge — mirror the shading with it */
+[dir="rtl"] .auth-banner::after {
+  background: linear-gradient(258deg,
+    rgba(30, 22, 98, .95) 0%,
+    rgba(40, 30, 124, .74) 36%,
+    rgba(52, 40, 152, .36) 70%,
+    rgba(58, 45, 160, .2) 100%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .auth-banner::before {
+    animation: bannerDrift 44s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes bannerDrift {
+    from { transform: scale(1); }
+    to   { transform: scale(1.09) translate(1.4%, -1.6%); }
+  }
 }
 .auth-brand {
   display: inline-flex; align-items: center; gap: 10px;
@@ -770,7 +799,6 @@ h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -0.015em; }
   background: radial-gradient(500px 260px at 80% 0%, rgba(255,255,255,.16), transparent 60%);
   pointer-events: none;
 }
-.about-cta .banner-scene { opacity: .95; }
 .cta-title { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; position: relative; }
 .cta-text { font-size: 14.5px; color: rgba(255,255,255,.86); margin: 10px auto 0; max-width: 480px; position: relative; }
 .cta-actions { display: flex; justify-content: center; gap: 12px; margin-top: 26px; position: relative; }
@@ -963,51 +991,6 @@ html[lang="ar"] * { letter-spacing: 0; }
 /* ==========================================================
    Auth pages — v2 polish
    ========================================================== */
-.banner-glow {
-  position: absolute; border-radius: 50%;
-  filter: blur(64px); pointer-events: none;
-}
-.banner-glow.g1 { width: 230px; height: 230px; background: rgba(163, 118, 255, .55); top: -80px; inset-inline-start: -70px; }
-.banner-glow.g2 { width: 270px; height: 270px; background: rgba(64, 52, 200, .45); bottom: -100px; inset-inline-end: -80px; }
-.banner-scene {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  color: #fff; pointer-events: none;
-}
-.sc-item { transform: translate(150px, 248px); opacity: 0; }
-
-/* Scene animation — anchored to the banner bottom, never fights the copy.
-   Reduced motion keeps everything static. */
-@media (prefers-reduced-motion: no-preference) {
-  .sc-route { animation: scRoute 1.15s linear infinite; }
-  .sc-window { animation: scBlink 7.5s ease-in-out infinite; }
-  .sc-window.d2 { animation-delay: 2.5s; }
-  .sc-window.d3 { animation-delay: 5s; }
-  .sc-float { animation: scFloat 6s ease-in-out infinite alternate; }
-  .sc-float2 { animation-duration: 7.4s; animation-delay: 1.3s; }
-  .sc-item { animation: scItemPass 7.5s cubic-bezier(.45,.05,.35,1) infinite; }
-
-  /* Dotted trail keeps flowing */
-  @keyframes scRoute { to { stroke-dashoffset: -10; } }
-  @keyframes scBlink {
-    0%, 8% { opacity: .25; }
-    14%, 34% { opacity: .95; }
-    48%, 100% { opacity: .25; }
-  }
-  /* Listing cards hover gently like in the brand illustration */
-  @keyframes scFloat {
-    from { transform: translateY(-3px); }
-    to   { transform: translateY(3px); }
-  }
-  /* The shared item hops from one neighbor's house to the other */
-  @keyframes scItemPass {
-    0%   { transform: translate(150px, 248px) scale(.5); opacity: 0; }
-    12%  { transform: translate(163px, 240px) scale(.95); opacity: 1; }
-    50%  { transform: translate(240px, 231px) scale(1.03); opacity: 1; }
-    88%  { transform: translate(317px, 240px) scale(.95); opacity: 1; }
-    96%  { transform: translate(328px, 246px) scale(.6); opacity: 0; }
-    100% { transform: translate(330px, 248px) scale(.5); opacity: 0; }
-  }
-}
 .banner-badge {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 6px 13px; border-radius: 999px;
