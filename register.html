@@ -27,6 +27,10 @@
 
     <!-- Side banner -->
     <aside class="auth-banner">
+      <span class="banner-glow g1" aria-hidden="true"></span>
+      <span class="banner-glow g2" aria-hidden="true"></span>
+      <span class="banner-pattern" aria-hidden="true"></span>
+
       <div class="auth-brand">
         <span class="brand-mark">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -39,6 +43,12 @@
       </div>
 
       <div class="auth-banner-main">
+        <span class="banner-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span data-i18n="auth.badge">Neighborhood sharing platform</span>
+        </span>
         <h2 class="auth-banner-title" data-i18n="reg.bannerTitle">Everything you need, already next door.</h2>
         <p class="auth-banner-text" data-i18n="reg.bannerText">Rent tools, gear and household items from neighbors you trust — or earn by sharing the things you barely use.</p>
         <ul class="auth-points">
@@ -55,9 +65,14 @@
             <span data-i18n="reg.point3">Track every item, request and update in one place</span>
           </li>
         </ul>
+        <div class="banner-stats">
+          <div class="banner-stat"><span class="num">1,200+</span><span class="lbl" data-i18n="reg.statShared">items shared</span></div>
+          <div class="banner-stat"><span class="num">350+</span><span class="lbl" data-i18n="reg.statNeighbors">active neighbors</span></div>
+          <div class="banner-stat"><span class="num">4.9</span><span class="lbl" data-i18n="reg.statRating">satisfaction score</span></div>
+        </div>
       </div>
 
-      <p class="auth-banner-foot" data-i18n="reg.foot">Already shared 1,200+ items between neighbors this year.</p>
+      <p class="auth-banner-foot" data-i18n="reg.foot">Borrow what you need. Lend what you don't.</p>
     </aside>
 
     <!-- Form side -->
@@ -68,41 +83,72 @@
       <form id="register-form" novalidate>
         <div class="field">
           <label class="label" for="reg-name" data-i18n="reg.name">Full name</label>
-          <input type="text" id="reg-name" class="input" data-i18n-ph="reg.namePh" placeholder="e.g. Ahmed Ali" autocomplete="name" required>
+          <div class="input-wrap">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            <input type="text" id="reg-name" class="input" data-i18n-ph="reg.namePh" placeholder="e.g. Ahmed Ali" autocomplete="name" required>
+          </div>
         </div>
 
         <div class="field">
           <label class="label" for="reg-email" data-i18n="reg.email">Email address</label>
-          <input type="email" id="reg-email" class="input" data-i18n-ph="reg.emailPh" placeholder="you@example.com" autocomplete="email" required>
+          <div class="input-wrap">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+            <input type="email" id="reg-email" class="input" data-i18n-ph="reg.emailPh" placeholder="you@example.com" autocomplete="email" required>
+          </div>
         </div>
 
         <div class="field">
           <label class="label" for="reg-phone" data-i18n="reg.phone">Phone number</label>
-          <input type="tel" id="reg-phone" class="input" data-i18n-ph="reg.phonePh" placeholder="01xxxxxxxxx" autocomplete="tel" required>
+          <div class="input-wrap">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+            <input type="tel" id="reg-phone" class="input" data-i18n-ph="reg.phonePh" placeholder="01xxxxxxxxx" autocomplete="tel" required>
+          </div>
         </div>
 
         <div class="input-grid">
           <div class="field">
             <label class="label" for="reg-city" data-i18n="reg.city">City</label>
-            <input type="text" id="reg-city" class="input" data-i18n-ph="reg.cityPh" placeholder="Cairo" required>
+            <div class="input-wrap">
+              <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9.5 10h.01M13.5 10h.01M9.5 13.5h.01M13.5 13.5h.01M9.5 17h.01M13.5 17h.01"/></svg></span>
+              <input type="text" id="reg-city" class="input" data-i18n-ph="reg.cityPh" placeholder="Cairo" required>
+            </div>
           </div>
           <div class="field">
             <label class="label" for="reg-district" data-i18n="reg.district">District</label>
-            <input type="text" id="reg-district" class="input" data-i18n-ph="reg.districtPh" placeholder="Nasr City" required>
+            <div class="input-wrap">
+              <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <input type="text" id="reg-district" class="input" data-i18n-ph="reg.districtPh" placeholder="Nasr City" required>
+            </div>
           </div>
         </div>
 
         <div class="field">
           <label class="label" for="reg-pass" data-i18n="reg.pass">Password</label>
-          <input type="password" id="reg-pass" class="input" data-i18n-ph="reg.passPh" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required>
+          <div class="input-wrap">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <input type="password" id="reg-pass" class="input" data-i18n-ph="reg.passPh" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required>
+            <button type="button" class="pass-toggle" data-target="reg-pass" aria-label="Show password">
+              <svg class="eye" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+          <div class="strength" id="reg-strength" data-score="0" aria-hidden="true"><span class="seg"></span><span class="seg"></span><span class="seg"></span></div>
+          <p class="strength-label" id="reg-strength-label" data-i18n="reg.strength">Password strength</p>
         </div>
 
         <div class="field">
           <label class="label" for="reg-confirm-pass" data-i18n="reg.confirm">Confirm password</label>
-          <input type="password" id="reg-confirm-pass" class="input" data-i18n-ph="reg.confirmPh" placeholder="Re-enter your password" autocomplete="new-password" required>
+          <div class="input-wrap">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <input type="password" id="reg-confirm-pass" class="input" data-i18n-ph="reg.confirmPh" placeholder="Re-enter your password" autocomplete="new-password" required>
+            <button type="button" class="pass-toggle" data-target="reg-confirm-pass" aria-label="Show password">
+              <svg class="eye" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block" data-i18n="reg.btn">Create Account</button>
+        <button type="submit" id="register-btn" class="btn btn-primary btn-lg btn-block" data-i18n="reg.btn">Create Account</button>
 
         <p class="auth-alt"><span data-i18n="reg.alt">Already have an account?</span> <a href="login.html" data-i18n="reg.altLink">Log in</a></p>
       </form>
@@ -110,37 +156,106 @@
 
   </main>
 
-  <script>
-    document.getElementById("register-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      var fullName    = document.getElementById("reg-name").value.trim();
-      var email       = document.getElementById("reg-email").value.trim().toLowerCase();
-      var phone       = document.getElementById("reg-phone").value.trim();
-      var city        = document.getElementById("reg-city").value.trim();
-      var district    = document.getElementById("reg-district").value.trim();
-      var password    = document.getElementById("reg-pass").value;
-      var confirmPass = document.getElementById("reg-confirm-pass").value;
-
-      if (fullName.length < 2) return Jari.toast(Jari.t("toast.nameShort"), "error");
-      if (password.length < 6) return Jari.toast(Jari.t("toast.passShort"), "error");
-      if (password !== confirmPass) return Jari.toast(Jari.t("toast.mismatch"), "error");
-
-      var users = JSON.parse(localStorage.getItem("jariUsers")) || [];
-
-      if (users.some(function (u) { return u.email === email; })) {
-        return Jari.toast(Jari.t("toast.emailTaken"), "error");
-      }
-
-      users.push({ name: fullName, email: email, phone: phone, city: city, district: district, password: password });
-      localStorage.setItem("jariUsers", JSON.stringify(users));
-      localStorage.setItem("jariCurrentUser", email);
-
-      Jari.flash(Jari.t("flash.accountReady"));
-      window.location.href = "dashboard.html";
-    });
-  </script>
-
   <script src="components.js"></script>
+  <script>
+    (function () {
+      var passInput    = document.getElementById("reg-pass");
+      var confirmInput = document.getElementById("reg-confirm-pass");
+      var strengthEl   = document.getElementById("reg-strength");
+      var strengthLabel = document.getElementById("reg-strength-label");
+
+      /* ---- Password show / hide toggles ---- */
+      function syncA11y() {
+        document.querySelectorAll(".pass-toggle").forEach(function (btn) {
+          var input = document.getElementById(btn.getAttribute("data-target"));
+          var showing = input.type === "text";
+          btn.setAttribute("aria-label", Jari.t(showing ? "auth.hidePass" : "auth.showPass"));
+        });
+      }
+      document.querySelectorAll(".pass-toggle").forEach(function (btn) {
+        var input  = document.getElementById(btn.getAttribute("data-target"));
+        var eye    = btn.querySelector(".eye");
+        var eyeOff = btn.querySelector(".eye-off");
+        btn.addEventListener("click", function () {
+          var show = input.type === "password";
+          input.type = show ? "text" : "password";
+          eye.hidden = show;
+          eyeOff.hidden = !show;
+          syncA11y();
+        });
+      });
+
+      /* ---- Password strength meter ---- */
+      function passScore(pw) {
+        var s = 0;
+        if (pw.length >= 6) s++;
+        if (pw.length >= 10) s++;
+        if (/[A-Za-z]/.test(pw) && /\d/.test(pw)) s++;
+        return Math.min(s, 3);
+      }
+      function syncStrength() {
+        var pw = passInput.value;
+        var s = pw ? passScore(pw) : 0;
+        strengthEl.setAttribute("data-score", String(s));
+        var key = s === 0 ? "reg.strength" : s === 1 ? "reg.strengthWeak" : s === 2 ? "reg.strengthMedium" : "reg.strengthStrong";
+        strengthLabel.textContent = Jari.t(key);
+        strengthLabel.className = "strength-label" + (s ? " w" + s : "");
+      }
+      passInput.addEventListener("input", syncStrength);
+
+      /* ---- Clear invalid state while typing ---- */
+      ["reg-name", "reg-email", "reg-phone", "reg-city", "reg-district", "reg-pass", "reg-confirm-pass"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", function () { this.classList.remove("invalid"); });
+      });
+      function mark(id) { document.getElementById(id).classList.add("invalid"); }
+
+      /* ---- Re-sync strings on language change ---- */
+      document.addEventListener("jari:langchange", function () {
+        syncA11y();
+        syncStrength();
+      });
+      syncA11y();
+      syncStrength();
+
+      /* ---- Submit ---- */
+      document.getElementById("register-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var fullName    = document.getElementById("reg-name").value.trim();
+        var email       = document.getElementById("reg-email").value.trim().toLowerCase();
+        var phone       = document.getElementById("reg-phone").value.trim();
+        var city        = document.getElementById("reg-city").value.trim();
+        var district    = document.getElementById("reg-district").value.trim();
+        var password    = passInput.value;
+        var confirmPass = confirmInput.value;
+
+        if (fullName.length < 2) { mark("reg-name"); return Jari.toast(Jari.t("toast.nameShort"), "error"); }
+        if (password.length < 6) { mark("reg-pass"); return Jari.toast(Jari.t("toast.passShort"), "error"); }
+        if (password !== confirmPass) {
+          mark("reg-pass"); mark("reg-confirm-pass");
+          return Jari.toast(Jari.t("toast.mismatch"), "error");
+        }
+
+        var users = JSON.parse(localStorage.getItem("jariUsers")) || [];
+
+        if (users.some(function (u) { return u.email === email; })) {
+          mark("reg-email");
+          return Jari.toast(Jari.t("toast.emailTaken"), "error");
+        }
+
+        var btn = document.getElementById("register-btn");
+        btn.classList.add("loading");
+
+        setTimeout(function () {
+          users.push({ name: fullName, email: email, phone: phone, city: city, district: district, password: password });
+          localStorage.setItem("jariUsers", JSON.stringify(users));
+          localStorage.setItem("jariCurrentUser", email);
+
+          Jari.flash(Jari.t("flash.accountReady"));
+          window.location.href = "dashboard.html";
+        }, 300);
+      });
+    })();
+  </script>
 </body>
 </html>
